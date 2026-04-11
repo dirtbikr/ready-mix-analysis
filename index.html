@@ -174,6 +174,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
 
 <div class="divider"></div>
 
+<!-- PRICE CHANGES -->
+<div class="page">
+  <div class="page-title">Changing Prices</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--gray-dd)">
+      <p style="font-size:13px;color:var(--gray);margin-bottom:12px">Material costs go up $5 across the board?</p>
+      <p style="font-size:18px;color:var(--white);font-weight:800">$159 &rarr; $164. <span style="color:var(--red-l)">One number.</span></p>
+    </div>
+    <div style="padding:16px 20px;border-bottom:1px solid var(--gray-dd)">
+      <p style="font-size:13px;color:var(--gray);margin-bottom:12px">High-strength mixes get more expensive?</p>
+      <p style="font-size:18px;color:var(--white);font-weight:800">$7/step &rarr; $8/step. <span style="color:var(--red-l)">One number.</span></p>
+    </div>
+    <div style="padding:16px 20px;border-bottom:1px solid var(--gray-dd)">
+      <p style="font-size:13px;color:var(--gray);margin-bottom:12px">Diesel jumps and you need a fuel surcharge?</p>
+      <p style="font-size:18px;color:var(--white);font-weight:800">$3.00/mi &rarr; $3.25/mi. <span style="color:var(--red-l)">One number.</span></p>
+    </div>
+    <div style="padding:16px 20px">
+      <p style="font-size:13px;color:var(--gray);margin-bottom:12px">Want to discourage small loads more?</p>
+      <p style="font-size:18px;color:var(--white);font-weight:800">$45/yd &rarr; $50/yd. <span style="color:var(--red-l)">One number.</span></p>
+    </div>
+  </div>
+  <div class="card card-red" style="margin-top:16px">
+    <p>Every price change is <strong>one number.</strong> No reprinting a 66-cell table. No updating 6 zones. No recalculating 30 small load fees. Change the number and every quote in the system updates instantly.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <!-- QUOTE CALCULATOR -->
 <div class="page">
   <div class="page-title">Try It Yourself</div>
@@ -197,7 +225,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
     <div class="input-group">
       <div class="input-label"><span>Yards</span><span class="input-value" id="lbl-yards">10</span></div>
       <input type="range" class="input-range" id="sl-yards" min="1" max="12" step="1" value="10" oninput="upd()">
-      <div class="range-labels"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+      <div style="position:relative;height:16px;margin-top:4px;font-size:9px;color:var(--gray-d)">
+        <span style="position:absolute;left:0%">1</span>
+        <span style="position:absolute;left:18.2%;transform:translateX(-50%)">3</span>
+        <span style="position:absolute;left:45.5%;transform:translateX(-50%);color:var(--red-l);font-weight:700">6</span>
+        <span style="position:absolute;left:72.7%;transform:translateX(-50%)">9</span>
+        <span style="position:absolute;right:0">12</span>
+      </div>
     </div>
     <div class="input-group" style="margin-bottom:0">
       <div class="input-label"><span>PSI</span></div>
