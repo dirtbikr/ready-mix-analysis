@@ -367,17 +367,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
 </div>
 
 <div class="page" style="padding-top:8px">
-  <!-- Order size + format toggles -->
+  <!-- View format toggle -->
   <div class="toggle-row">
-    <div class="tg-group">
-      <div class="tg-label">Order Size</div>
-      <div class="tg-pills" id="tool-size">
-        <button data-yd="3" onclick="toolSize(this)">3 yd</button>
-        <button data-yd="5" onclick="toolSize(this)">5 yd</button>
-        <button class="active" data-yd="8" onclick="toolSize(this)">8 yd</button>
-        <button data-yd="10" onclick="toolSize(this)">10 yd</button>
-      </div>
-    </div>
     <div class="tg-group">
       <div class="tg-label">View as</div>
       <div class="tg-pills" id="tool-fmt">
@@ -385,6 +376,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
         <button data-fmt="card" onclick="toolFmt(this)">Card</button>
       </div>
     </div>
+  </div>
+
+  <!-- Order size slider -->
+  <div class="slider-card" style="margin:0 16px 14px">
+    <div class="slider-head">
+      <span class="slider-name">Order Size</span>
+      <span class="slider-val" id="t-yd-val">10 yd</span>
+    </div>
+    <input type="range" class="input-range" id="t-yd" min="1" max="10" value="10" step="1" oninput="toolUpd()">
+    <div class="slider-help">Pick the order size to evaluate. The table updates to show every location at this quantity.</div>
   </div>
 
   <!-- Sliders -->
@@ -600,9 +601,8 @@ const TOOL_LOCS=[
   ['Madawaska',62,4],['Eagle Lake',70,5],['Allagash',105,6]
 ];
 const CARD_MARKUP=1.035;
-let toolState={yd:8,fmt:'cash',mat:166,pm:3.00,thr:6,slc:45};
+let toolState={yd:10,fmt:'cash',mat:166,pm:3.00,thr:6,slc:45};
 
-function toolSize(btn){document.querySelectorAll('#tool-size button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolState.yd=parseInt(btn.dataset.yd);toolUpd()}
 function toolFmt(btn){document.querySelectorAll('#tool-fmt button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolState.fmt=btn.dataset.fmt;toolUpd()}
 
 function toolPriceCash(loc){
@@ -621,11 +621,13 @@ function toolCurrentPrice(loc){
 function toolDisplay(p){return toolState.fmt==='card'?p*CARD_MARKUP:p}
 
 function toolUpd(){
+  toolState.yd=parseInt(document.getElementById('t-yd').value);
   toolState.mat=parseInt(document.getElementById('t-mat').value);
   toolState.pm=parseFloat(document.getElementById('t-pm').value);
   toolState.thr=parseInt(document.getElementById('t-thr').value);
   toolState.slc=parseInt(document.getElementById('t-slc').value);
 
+  document.getElementById('t-yd-val').textContent=toolState.yd+' yd';
   document.getElementById('t-mat-val').textContent='$'+toolState.mat+'/yd';
   document.getElementById('t-pm-val').textContent='$'+toolState.pm.toFixed(2)+'/mi';
   document.getElementById('t-thr-val').textContent=toolState.thr+' yd';
