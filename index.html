@@ -151,7 +151,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
 .ptbl .mi-sub{font-size:12px;color:#a8a8a8;font-weight:500;display:block;margin-top:2px}
 .ptbl .price{font-weight:700;color:var(--white);text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
 .ptbl .price-old{color:#888;text-decoration:line-through;font-weight:600}
-.ptbl .delta{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.ptbl .delta{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:15px;line-height:1.2}
+.ptbl .delta-sub{display:block;font-size:11px;font-weight:600;opacity:.7;margin-top:2px;font-variant-numeric:tabular-nums}
 .ptbl .delta-up{color:#86efac}
 .ptbl .delta-down{color:#fca5a5}
 .ptbl .delta-flat{color:var(--gray)}
@@ -459,7 +460,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Ro
         <th>Location</th>
         <th class="right">Last Yr</th>
         <th class="right">New</th>
-        <th class="right">&Delta;/yd</th>
+        <th class="right">Change</th>
       </tr>
     </thead>
     <tbody id="t-rows"></tbody>
@@ -649,10 +650,11 @@ function toolUpd(){
     else if(deltaPerYd<-0.5)cls='delta-down';
 
     const sign=deltaPerYd>=0?'+':'';
+    const signTotal=delta>=0?'+':'';
     rows+=`<tr><td class="loc-cell">${loc[0]}<span class="mi-sub">${loc[1]} mi</span></td>`+
           `<td class="price price-old">${fmt(cur)}</td>`+
           `<td class="price">${fmt(nw)}</td>`+
-          `<td class="delta ${cls}">${sign}$${deltaPerYd.toFixed(2)}</td></tr>`;
+          `<td class="delta ${cls}">${signTotal}${fmt(delta)}<span class="delta-sub">${sign}$${deltaPerYd.toFixed(2)}/yd</span></td></tr>`;
   }
   document.getElementById('t-rows').innerHTML=rows;
 
