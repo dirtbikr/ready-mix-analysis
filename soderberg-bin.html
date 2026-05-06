@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Soderberg Bin Plan — 24' × 18' × 10'</title>
+<title>Soderberg Bin Plan — 20' × 18' × 10'</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { width: 100%; height: 100%; overflow: hidden; }
@@ -166,7 +166,7 @@
 
 <div id="header">
   <h1>Soderberg Bin Plan</h1>
-  <div class="dims" id="dimsLabel">24' W × 18' D × 10' H · 20'×16' interior</div>
+  <div class="dims" id="dimsLabel">20' W × 18' D × 10' H · 16'×16' interior</div>
   <div class="stack">Stack: B′ → A → B′ → A → B′</div>
 </div>
 
@@ -218,9 +218,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // ============ Configuration ============
-// Inside dimensions: 20' W × 16' D, walls 2' thick on all three sides.
-// Overall: 24' W × 18' D, 10' tall (5 courses @ 2').
-const STRUCTURE_W = 24;        // back wall length, X axis
+// Overall: 20' W × 18' D, walls 2' thick. Interior: 16' W × 16' D.
+// 10' tall (5 courses @ 2').
+const STRUCTURE_W = 20;        // back wall length, X axis
 const STRUCTURE_D = 18;        // bin depth, Z axis (Z=0 back, Z=18 front/open)
 const COURSE_H = 2;            // each course is 2 ft tall
 const NUM_COURSES = 5;         // 10 ft tall
@@ -249,18 +249,17 @@ const COLOR_NAMES = {
 // Side wall blocks: pos = Z coord of back edge, oriented along Z.
 //
 // Running-bond seam check (interior seams only):
-//   Back wall:  B′ {8, 14, 20}  vs  A {6, 12, 18}   — no overlap
-//   Side walls: B′ {6, 12}      vs  A {8, 14}       — no overlap
+//   Back wall:  B′ {8, 14}  vs  A {6, 12, 18}   — no overlap
+//   Side walls: B′ {6, 12}  vs  A {8, 14}       — no overlap
 const COURSES = {
   // Course B′ — side walls run full length, closing corners.
-  // Back wall sits between side walls (x=2 to x=22).
+  // Back wall sits between side walls (x=2 to x=18).
   bPrime: {
-    // 20 ft span: [6][6][2][6] — 2-ft sandwiched between 6-ft blocks, off the corner
+    // 16 ft span: [6][6][4]
     back: [
       { pos: 2,  len: 6 },
       { pos: 8,  len: 6 },
-      { pos: 14, len: 2 },
-      { pos: 16, len: 6 }
+      { pos: 14, len: 4 }
     ],
     // Side walls full 18 ft: [6][6][6] — no small blocks
     leftSide: [
@@ -277,12 +276,12 @@ const COURSES = {
   // Course A — back wall runs full length, closing corners.
   // Side walls butt against back wall at z=2.
   a: {
-    // Full 24 ft: [6][6][6][6] — no small blocks
+    // Full 20 ft: [6][6][6][2] — 2-ft forced to right corner by running-bond constraint
     back: [
       { pos: 0,  len: 6 },
       { pos: 6,  len: 6 },
       { pos: 12, len: 6 },
-      { pos: 18, len: 6 }
+      { pos: 18, len: 2 }
     ],
     // 16 ft from z=2 to z=18: [6][6][4]
     leftSide: [
@@ -307,7 +306,7 @@ scene.fog = new THREE.Fog(0xeef2f7, 80, 260);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 600);
 const targetPoint = new THREE.Vector3(STRUCTURE_W/2, 5, STRUCTURE_D/2);
-camera.position.set(40, 30, 38);
+camera.position.set(32, 24, 30);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -537,19 +536,19 @@ document.querySelectorAll('#courseToggles .btn').forEach(btn => {
 // ============ Camera Presets ============
 const presets = {
   iso: {
-    pos: new THREE.Vector3(40, 30, 38),
+    pos: new THREE.Vector3(32, 24, 30),
     target: new THREE.Vector3(STRUCTURE_W/2, 5, STRUCTURE_D/2)
   },
   top: {
-    pos: new THREE.Vector3(STRUCTURE_W/2, 50, STRUCTURE_D/2 + 0.001),
+    pos: new THREE.Vector3(STRUCTURE_W/2, 42, STRUCTURE_D/2 + 0.001),
     target: new THREE.Vector3(STRUCTURE_W/2, 0, STRUCTURE_D/2)
   },
   front: {
-    pos: new THREE.Vector3(STRUCTURE_W/2, 10, 50),
+    pos: new THREE.Vector3(STRUCTURE_W/2, 9, 42),
     target: new THREE.Vector3(STRUCTURE_W/2, 5, STRUCTURE_D/2)
   },
   side: {
-    pos: new THREE.Vector3(-32, 10, STRUCTURE_D/2),
+    pos: new THREE.Vector3(-26, 9, STRUCTURE_D/2),
     target: new THREE.Vector3(STRUCTURE_W/2, 5, STRUCTURE_D/2)
   }
 };
