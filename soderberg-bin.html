@@ -249,17 +249,21 @@ const COLOR_NAMES = {
 // Side wall blocks: pos = Z coord of back edge, oriented along Z.
 //
 // Running-bond seam check (interior seams only):
-//   Back wall:  B′ {8, 14}  vs  A {6, 12, 18}   — no overlap
+//   Back wall:  B′ {8, 12}  vs  A {6, 10, 14}   — no overlap
 //   Side walls: B′ {6, 12}  vs  A {8, 14}       — no overlap
+//
+// Small blocks are placed away from corners: B′ back has its 4-ft sandwiched
+// between two 6-fts; A back has 6-ft at both corners with the 4-ft pair in
+// the middle. Every load-bearing corner is a 6-ft block.
 const COURSES = {
   // Course B′ — side walls run full length, closing corners.
   // Back wall sits between side walls (x=2 to x=18).
   bPrime: {
-    // 16 ft span: [6][6][4]
+    // 16 ft span: [6][4][6] — 4-ft sandwiched between 6-fts
     back: [
       { pos: 2,  len: 6 },
-      { pos: 8,  len: 6 },
-      { pos: 14, len: 4 }
+      { pos: 8,  len: 4 },
+      { pos: 12, len: 6 }
     ],
     // Side walls full 18 ft: [6][6][6] — no small blocks
     leftSide: [
@@ -276,12 +280,12 @@ const COURSES = {
   // Course A — back wall runs full length, closing corners.
   // Side walls butt against back wall at z=2.
   a: {
-    // Full 20 ft: [6][6][6][2] — 2-ft forced to right corner by running-bond constraint
+    // Full 20 ft: [6][4][4][6] — 6-ft at both corners, 4-ft pair in the middle
     back: [
       { pos: 0,  len: 6 },
-      { pos: 6,  len: 6 },
-      { pos: 12, len: 6 },
-      { pos: 18, len: 2 }
+      { pos: 6,  len: 4 },
+      { pos: 10, len: 4 },
+      { pos: 14, len: 6 }
     ],
     // 16 ft from z=2 to z=18: [6][6][4]
     leftSide: [
